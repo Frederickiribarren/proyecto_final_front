@@ -25,7 +25,7 @@ const Banner = () => {
           top: 0,
           left: 0,
           zIndex: 0,
-            filter: "brightness(0.5)", 
+            filter: "brightness(0.3)", 
         }}
       />
       <Box sx={{ position: "relative", zIndex: 1, p: 4 }}>
@@ -33,7 +33,7 @@ const Banner = () => {
           LICITA SEGUROS
         </Typography>
         <Typography variant="body1" sx={{ color: "#fff", fontSize: "1.5rem" }}>
-          Tu mejor oportunidad para encontrar el seguro ideal.
+          Tu acceso claro a licitaciones de seguros.
         </Typography>
       </Box>
     </Box>

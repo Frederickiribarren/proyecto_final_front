@@ -49,18 +49,36 @@ function Header(props) {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", height: { xs: 56, sm: 72 } }}>
       <CssBaseline />
-      <AppBar component="nav" sx={{ backgroundColor: "#fff" }}>
-        <Toolbar>
+      <AppBar
+        component="nav"
+        elevation={2}
+        sx={{
+          backgroundColor: "#fff",
+          boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+          borderBottom: "1px solid #e0e0e0",
+        }}
+      >
+        <Toolbar sx={{ minHeight: { xs: 56, sm: 72 }, pl: { xs: 2, sm: 3 } }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" }, border: "1px solid red" }}
+            sx={{
+              mr: 2,
+              ml: { xs: 1, sm: 0 }, // Agrega margen izquierdo en mobile
+              display: { sm: "none" },
+              border: "1.5px solid #e53935",
+              background: "#fff",
+              "&:hover": {
+                background: "#ffeaea",
+                borderColor: "#b71c1c",
+              },
+            }}
           >
-            <MenuIcon sx={{ color: "red" }} />
+            <MenuIcon sx={{ color: "#e53935" }} />
           </IconButton>
           <Box
             sx={{
@@ -68,27 +86,42 @@ function Header(props) {
               alignItems: "center",
               justifyContent: "center",
               flexGrow: 1,
+              gap: { xs: 1, sm: 4 },
             }}
           >
             <img
               src={logo}
               alt="Logo"
-              style={{ height: 90, marginRight: 50 }}
+              style={{
+                height: 100,
+                marginRight: 24,
+                borderRadius: 8,
+                boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
+                background: "#fff",
+                padding: 4,
+              }}
             />
             <Box
               sx={{
                 display: { xs: "none", sm: "flex" },
-                pb: 0.5,
                 gap: 2,
+                alignItems: "center",
               }}
             >
               {navItems.map((item) => (
                 <Button
                   key={item}
                   sx={{
-                    color: "#000",
+                    color: "#222",
+                    fontWeight: 500,
+                    fontSize: 16,
+                    px: 2,
+                    py: 1,
+                    borderRadius: 2,
                     position: "relative",
                     background: "none",
+                    textTransform: "none",
+                    transition: "color 0.2s",
                     "&::after": {
                       content: '""',
                       display: "block",
@@ -97,10 +130,14 @@ function Header(props) {
                       bottom: 0,
                       width: "100%",
                       height: "2px",
-                      background: "red", // Color de la barra
+                      background: "#e53935",
                       transform: "scaleX(0)",
                       transition: "transform 0.3s cubic-bezier(.4,0,.2,1)",
                       transformOrigin: "left",
+                    },
+                    "&:hover": {
+                      color: "#e53935",
+                      background: "#fff5f5",
                     },
                     "&:hover::after": {
                       transform: "scaleX(1)",
@@ -121,23 +158,40 @@ function Header(props) {
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
           sx={{
             display: { xs: "block", sm: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              background: "#fff",
+              borderRight: "1.5px solid #e0e0e0",
             },
           }}
         >
           <DrawerList onClick={handleDrawerToggle} />
         </Drawer>
       </nav>
-      <Box component="main" sx={{ }}>
-        <Toolbar />
-        {/* Contenido principal aquí */}
-      </Box>
+      <style>
+        {`
+          .MuiButton-root:focus-visible {
+            outline: 2px solid #e53935 !important;
+            outline-offset: 2px;
+          }
+          @media (max-width: 600px) {
+            .MuiToolbar-root {
+              min-height: 56px !important;
+              padding-left: 8px !important;
+              padding-right: 8px !important;
+            }
+            img[alt="Logo"] {
+              height: 40px !important;
+              margin-right: 12px !important;
+            }
+          }
+        `}
+      </style>
     </Box>
   );
 }
