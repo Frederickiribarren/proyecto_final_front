@@ -18,6 +18,7 @@ import news5 from "../assets/finance.jpg";
 import data from "../json/data.json";
 
 // Mapeo de nombres de imagen a importaciones reales
+// Permite asociar dinámicamente las imágenes a cada sección según el nombre en el JSON
 const imageMap = {
   news1,
   news2,
@@ -26,6 +27,12 @@ const imageMap = {
   news5,
 };
 
+/**
+ * Componente News
+ * Muestra una lista de secciones de noticias relacionadas con procesos de licitación.
+ * Cada sección incluye un título, una imagen y una lista de empresas con descripciones.
+ * Los datos provienen de un archivo JSON y las imágenes se asignan dinámicamente.
+ */
 const News = () => {
   // Asigna la imagen real a cada sección usando el nombre del JSON
   const sections = data.map((section) => ({
@@ -35,6 +42,7 @@ const News = () => {
 
   return (
     <Box>
+      {/* Título principal */}
       <Box
         sx={{
           display: "flex",
@@ -49,6 +57,7 @@ const News = () => {
           Actualización de Procesos de Licitación
         </Typography>
       </Box>
+      {/* Renderiza cada sección como una tarjeta */}
       <Grid
         container
         spacing={3}
@@ -67,6 +76,7 @@ const News = () => {
                 p: { xs: 2, md: 3 },
               }}
             >
+              {/* Imagen de la sección */}
               <CardMedia
                 component="img"
                 image={section.image}
@@ -82,6 +92,7 @@ const News = () => {
                 }}
               />
               <CardContent sx={{ flex: 1 }}>
+                {/* Título de la sección */}
                 <Typography
                   variant="h6"
                   fontWeight="bold"
@@ -94,6 +105,7 @@ const News = () => {
                 >
                   {section.title}
                 </Typography>
+                {/* Lista de empresas y descripciones */}
                 <List dense>
                   {section.items.map((item, i) => (
                     <Box key={item.company}>

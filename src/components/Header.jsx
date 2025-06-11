@@ -21,6 +21,11 @@ import logo from "../assets/logo.png";
 const drawerWidth = 240;
 const navItems = ["Home", "Filtrar", "Ver Deatlles", "Buscar proveedores"];
 
+/**
+ * DrawerList
+ * Renderiza la lista de navegación para el menú lateral en dispositivos móviles.
+ * Recibe una función onClick para cerrar el Drawer al seleccionar una opción.
+ */
 const DrawerList = ({ onClick }) => (
   <Box onClick={onClick} sx={{ textAlign: "center" }}>
     <Typography variant="h6" sx={{ my: 2 }}>
@@ -39,6 +44,15 @@ const DrawerList = ({ onClick }) => (
   </Box>
 );
 
+/**
+ * Header
+ * Componente principal de la barra de navegación.
+ * Incluye:
+ *  - Logo de la aplicación.
+ *  - Menú de navegación adaptable (AppBar para escritorio, Drawer para móvil).
+ *  - Botón de menú hamburguesa visible solo en móvil.
+ *  - Navegación estilizada con Material UI.
+ */
 function Header(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -51,6 +65,7 @@ function Header(props) {
   return (
     <Box sx={{ display: "flex", height: { xs: 56, sm: 72 } }}>
       <CssBaseline />
+      {/* Barra superior de navegación */}
       <AppBar
         component="nav"
         elevation={2}
@@ -61,6 +76,7 @@ function Header(props) {
         }}
       >
         <Toolbar sx={{ minHeight: { xs: 56, sm: 72 }, pl: { xs: 2, sm: 3 } }}>
+          {/* Botón menú hamburguesa para móvil */}
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -89,6 +105,7 @@ function Header(props) {
               gap: { xs: 1, sm: 4 },
             }}
           >
+            {/* Logo de la aplicación */}
             <img
               src={logo}
               alt="Logo"
@@ -108,6 +125,7 @@ function Header(props) {
                 alignItems: "center",
               }}
             >
+              {/* Botones de navegación para escritorio */}
               {navItems.map((item) => (
                 <Button
                   key={item}
@@ -151,6 +169,7 @@ function Header(props) {
           </Box>
         </Toolbar>
       </AppBar>
+      {/* Drawer lateral para navegación en móvil */}
       <nav>
         <Drawer
           container={container}

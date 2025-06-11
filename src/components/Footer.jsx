@@ -4,6 +4,15 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
+/**
+ * Componente Footer
+ * Pie de página estilizado con Material UI.
+ * Incluye:
+ *  - Nombre y eslogan de la empresa.
+ *  - Íconos de redes sociales con enlaces.
+ *  - Copyright dinámico.
+ *  - Diseño responsivo usando Stack y Container.
+ */
 const Footer = () => {
   return (
     <Box
@@ -22,6 +31,7 @@ const Footer = () => {
           justifyContent="space-between"
           alignItems="center"
         >
+          {/* Sección de nombre y eslogan */}
           <Stack direction="row" alignItems="center" spacing={1}>
             <GavelIcon fontSize="large" />
             <Box>
@@ -33,6 +43,7 @@ const Footer = () => {
               </Typography>
             </Box>
           </Stack>
+          {/* Sección de redes sociales */}
           <Stack direction="row" spacing={2} alignItems="center">
             <Link
               href="https://twitter.com"
@@ -66,6 +77,7 @@ const Footer = () => {
             </Link>
           </Stack>
         </Stack>
+        {/* Copyright */}
         <Typography
           variant="caption"
           sx={{

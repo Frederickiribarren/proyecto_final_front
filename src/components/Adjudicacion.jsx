@@ -16,10 +16,19 @@ const pasos = [
     { img: lici6, alt: "Licitación 6", label: "Generación de informes" },
 ];
 
+/**
+ * Componente Adjudicacion
+ * Muestra visualmente los pasos clave de un proceso de licitación.
+ * Características:
+ *  - Cada paso se representa con una tarjeta, imagen e ícono.
+ *  - Diseño responsivo y atractivo con Material UI.
+ *  - Resalta la importancia de la transparencia y competencia en licitaciones.
+ */
 const Adjudicacion = () => {
     const theme = useTheme();
     return (
         <Box>
+            {/* Mensaje principal sobre transparencia y competencia */}
             <Typography sx={{
                 color: red[600],
                 textAlign: "center",
@@ -43,7 +52,7 @@ const Adjudicacion = () => {
                 mx: "auto",
                 position: "relative"
             }}>
-                {/* Tarjetas de pasos */}
+                {/* Tarjetas de pasos del proceso de licitación */}
                 {pasos.map((paso, idx) => (
                     <Box
                         key={idx}
