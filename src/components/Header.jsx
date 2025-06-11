@@ -19,7 +19,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import logo from "../assets/logo.png";
 
 const drawerWidth = 240;
-const navItems = ["Home", "Filtrar", "Ver Deatlles", "Buscar proveedores"];
+const navItems = ["Inicio", "Filtrar", "Ver Deatlles", "Buscar proveedores"];
 
 /**
  * DrawerList
