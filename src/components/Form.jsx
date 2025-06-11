@@ -1,0 +1,386 @@
+import * as React from 'react';
+import { useEffect, useState } from 'react';
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import TablePagination from '@mui/material/TablePagination';
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
+
+export default function Form() {
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(false);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  // Estados para filtros
+  const [filterCodigoExterno, setFilterCodigoExterno] = useState('');
+  const [filterNombre, setFilterNombre] = useState('');
+  const [filterCodigoEstado, setFilterCodigoEstado] = useState('');
+  const [filterFechaCierre, setFilterFechaCierre] = useState('');
+
+  // Opciones de estado
+  const estadoOptions = [
+    { value: '', label: 'Filtrar por Estado' },
+    { value: '5', label: '5 Publicada' },
+    { value: '6', label: '6 Cerrada' },
+    { value: '7', label: '7 Desierta' },
+    { value: '8', label: '8 Adjudicada' },
+    { value: '18', label: '18 Revocada' },
+    { value: '19', label: '19 Suspendida' },
+  ];
+
+  useEffect(() => {
+    fetch('/ipss/api/mercadoPublico/resultado.json')
+      .then((res) => res.json())
+      .then((json) => {
+        setData(json.Listado || []);
+        setError(false);
+      })
+      .catch(() => {
+        setData([]);
+        setError(true);
+      });
+  }, []);
+
+  // Función para normalizar texto (eliminar acentos y pasar a minúsculas)
+  const normalize = (str) =>
+    (str || '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase();
+
+  // Filtrar datos según los filtros individuales
+  const filteredData = data.filter((row) => {
+    const matchCodigoExterno = row.CodigoExterno?.toString().toLowerCase().includes(filterCodigoExterno.toLowerCase());
+    // Normalizar ambos para comparar sin acentos ni mayúsculas
+    const matchNombre = normalize(row.Nombre).includes(normalize(filterNombre));
+    // Filtrado por estado usando select
+    const matchCodigoEstado = filterCodigoEstado === '' || row.CodigoEstado?.toString() === filterCodigoEstado;
+    const matchFechaCierre = row.FechaCierre?.toLowerCase().includes(filterFechaCierre.toLowerCase());
+    return (
+      matchCodigoExterno &&
+      matchNombre &&
+      matchCodigoEstado &&
+      matchFechaCierre
+    );
+  });
+
+  // Calcular los datos a mostrar en la página actual
+  const paginatedData = filteredData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+
+  // Calcular cuántas filas vacías agregar para mantener el alto de la tabla
+  const emptyRows = rowsPerPage - paginatedData.length;
+
+  // Manejar cambio de página
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  // Manejar cambio de filas por página
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  return (
+    <Paper
+      style={{
+        width: '70%',
+        margin: '32px auto',
+        boxShadow: '0 4px 24px rgba(0,0,0,0.10)',
+        borderRadius: 16,
+        paddingBottom: 24,
+        background: '#fafbfc',
+      }}
+    >
+      {/* Filtros */}
+      <div
+        style={{
+          display: 'flex',
+          gap: 16,
+          padding: 24,
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          borderBottom: '1px solid #e0e0e0',
+          background: '#f5f7fa',
+        }}
+        className="filtros-responsive"
+      >
+        <input
+          type="text"
+          placeholder="Filtrar por Código Externo"
+          value={filterCodigoExterno}
+          onChange={e => { setFilterCodigoExterno(e.target.value); setPage(0); }}
+          style={{
+            padding: '10px 14px',
+            borderRadius: 8,
+            border: '1px solid #bdbdbd',
+            outline: 'none',
+            fontSize: 15,
+            minWidth: 180,
+            transition: 'border 0.2s',
+          }}
+        />
+        <input
+          type="text"
+          placeholder="Filtrar por Nombre"
+          value={filterNombre}
+          onChange={e => { setFilterNombre(e.target.value); setPage(0); }}
+          style={{
+            padding: '10px 14px',
+            borderRadius: 8,
+            border: '1px solid #bdbdbd',
+            outline: 'none',
+            fontSize: 15,
+            minWidth: 180,
+            transition: 'border 0.2s',
+          }}
+        />
+        <select
+          value={filterCodigoEstado}
+          onChange={e => { setFilterCodigoEstado(e.target.value); setPage(0); }}
+          style={{
+            padding: '10px 14px',
+            borderRadius: 8,
+            border: '1px solid #bdbdbd',
+            outline: 'none',
+            fontSize: 15,
+            minWidth: 180,
+            background: '#fff',
+            transition: 'border 0.2s',
+          }}
+        >
+          {estadoOptions.map(opt => (
+            <option key={opt.value} value={opt.value}>{opt.label}</option>
+          ))}
+        </select>
+        <input
+          type="text"
+          placeholder="Filtrar por Fecha Cierre"
+          value={filterFechaCierre}
+          onChange={e => { setFilterFechaCierre(e.target.value); setPage(0); }}
+          style={{
+            padding: '10px 14px',
+            borderRadius: 8,
+            border: '1px solid #bdbdbd',
+            outline: 'none',
+            fontSize: 15,
+            minWidth: 180,
+            transition: 'border 0.2s',
+          }}
+        />
+      </div>
+      <div style={{ height: 16 }} />
+      <TableContainer
+        style={{
+          margin: '0 auto',
+          background: '#fff',
+          borderRadius: 12,
+          boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+          // Ajuste para móvil: ancho completo
+          width: '70%',
+        }}
+        className="tabla-responsive"
+      >
+        <Table
+          sx={{
+            minWidth: 700,
+            tableLayout: 'fixed',
+            '@media (max-width:600px)': {
+              minWidth: 0,
+              tableLayout: 'auto',
+              fontSize: 12,
+            },
+          }}
+          aria-label="customized table"
+        >
+          <TableHead>
+            <TableRow>
+              <StyledTableCell className='col-codigo'>Código Externo</StyledTableCell>
+              <StyledTableCell className='col-nombre'>Nombre</StyledTableCell>
+              <StyledTableCell className='col-estado'>Estado</StyledTableCell>
+              <StyledTableCell className='col-fecha'>Fecha Cierre</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {error ? (
+              <TableRow>
+                <TableCell colSpan={4} align="center">Error al cargar los datos.</TableCell>
+              </TableRow>
+            ) : paginatedData.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={4} align="center">No hay datos disponibles.</TableCell>
+              </TableRow>
+            ) : (
+              paginatedData.map((row) => (
+                <StyledTableRow
+                  key={row.CodigoExterno}
+                  sx={{
+                    transition: 'background 0.2s',
+                    '&:hover': { background: '#e3f2fd' }
+                  }}
+                >
+                  <StyledTableCell style={{ width: 160, wordBreak: 'break-word' }}>{row.CodigoExterno}</StyledTableCell>
+                  <StyledTableCell style={{ width: 300, wordBreak: 'break-word' }}>{row.Nombre}</StyledTableCell>
+                  <StyledTableCell style={{ width: 140, wordBreak: 'break-word' }}>{row.CodigoEstado}</StyledTableCell>
+                  <StyledTableCell style={{ width: 180, wordBreak: 'break-word' }}>{row.FechaCierre}</StyledTableCell>
+                </StyledTableRow>
+              ))
+            )}
+            {/* Agrega filas vacías para mantener el alto */}
+            {emptyRows > 0 && !error && Array.from({ length: emptyRows }).map((_, idx) => (
+              <StyledTableRow key={`empty-${idx}`}>
+                <StyledTableCell colSpan={4} style={{ height: 53 }} />
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        component="div"
+        count={filteredData.length}
+        page={page}
+        onPageChange={handleChangePage}
+        rowsPerPage={rowsPerPage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+        rowsPerPageOptions={[5]}
+        labelRowsPerPage="Filas por página"
+        style={{
+          margin: '16px auto 0 auto',
+          borderRadius: 8,
+          background: '#f5f7fa',
+          boxShadow: '0 1px 4px rgba(0,0,0,0.03)',
+          border: '1px solid #e0e0e0',
+          width: '70%',
+        }}
+        classes={{
+          toolbar: 'pagination-toolbar',
+          selectLabel: 'pagination-select-label',
+          displayedRows: 'pagination-displayed-rows',
+          select: 'pagination-select',
+          actions: 'pagination-actions'
+        }}
+      />
+      <style>
+        {`
+          .filtros-responsive input,
+          .filtros-responsive select {
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid #bdbdbd;
+            outline: none;
+            font-size: 15px;
+            min-width: 180px;
+            transition: border 0.2s, box-shadow 0.2s;
+            background: #fff;
+          }
+          .filtros-responsive input:focus, .filtros-responsive select:focus {
+            border: 1.5px solid #1976d2 !important;
+            box-shadow: 0 0 0 2px #1976d22a;
+          }
+          .filtros-responsive select {
+            cursor: pointer;
+          }
+          .tabla-responsive {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            overflow-x: auto;
+          }
+          .MuiTableRow-root:hover {
+            background: #e3f2fd !important;
+            transition: background 0.2s;
+          }
+          .filtros-responsive + .tabla-responsive {
+            margin-top: 16px;
+          }
+          .pagination-toolbar {
+            justify-content: center !important;
+            padding: 0 16px !important;
+          }
+          .pagination-select, .pagination-select-label, .pagination-displayed-rows {
+            font-size: 15px !important;
+          }
+          .pagination-actions {
+            margin-left: 8px !important;
+          }
+          @media (max-width: 900px) {
+            .tabla-responsive {
+              width: 100% !important;
+              min-width: 0 !important;
+            }
+            .MuiTableCell-root {
+              font-size: 13px !important;
+              padding: 8px !important;
+            }
+            .pagination-toolbar {
+              flex-direction: column !important;
+              align-items: flex-start !important;
+              gap: 4px !important;
+            }
+          }
+          @media (max-width: 600px) {
+            .filtros-responsive {
+              flex-direction: column !important;
+              gap: 10px !important;
+              padding: 12px !important;
+            }
+            .filtros-responsive > * {
+              width: 100%;
+            }
+            .tabla-responsive {
+              width: 100% !important;
+              min-width: 0 !important;
+              overflow-x: auto !important;
+            }
+            .MuiTableCell-root {
+              font-size: 12px !important;
+              padding: 6px !important;
+              word-break: break-word !important;
+              white-space: normal !important;
+            }
+            .MuiTablePagination-root {
+              width: 100% !important;
+              min-width: 0 !important;
+              font-size: 13px !important;
+            }
+            .pagination-toolbar {
+              flex-direction: column !important;
+              align-items: flex-start !important;
+              gap: 4px !important;
+            }
+            /* Mejorar scroll horizontal para tablas en móvil */
+            .tabla-responsive {
+              -webkit-overflow-scrolling: touch;
+              scrollbar-width: thin;
+            }
+          }
+        `}
+      </style>
+    </Paper>
+  );
+}
