@@ -29,6 +29,17 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+ /**
+ * Componente Form
+ * Muestra una tabla de resultados de licitaciones con filtros y paginación.
+ * Características principales:
+ *  - Obtiene datos desde un endpoint JSON.
+ *  - Permite filtrar por código externo, nombre, estado y fecha de cierre.
+ *  - Normaliza texto para búsquedas insensibles a mayúsculas/acentos.
+ *  - Usa paginación para mostrar los resultados.
+ *  - Muestra mensajes de error o "sin datos" según corresponda.
+ *  - Estiliza la tabla y los filtros usando Material UI.
+ */
 export default function Form() {
   const [data, setData] = useState([]);
   const [error, setError] = useState(false);
@@ -41,7 +52,7 @@ export default function Form() {
   const [filterCodigoEstado, setFilterCodigoEstado] = useState('');
   const [filterFechaCierre, setFilterFechaCierre] = useState('');
 
-  // Opciones de estado
+  // Opciones de estado para el filtro select
   const estadoOptions = [
     { value: '', label: 'Filtrar por Estado' },
     { value: '5', label: '5 Publicada' },
@@ -53,6 +64,7 @@ export default function Form() {
   ];
 
   useEffect(() => {
+    // Carga los datos al montar el componente
     fetch('/ipss/api/mercadoPublico/resultado.json')
       .then((res) => res.json())
       .then((json) => {
@@ -66,13 +78,14 @@ export default function Form() {
   }, []);
 
   // Función para normalizar texto (eliminar acentos y pasar a minúsculas)
+  // Permite búsquedas más flexibles
   const normalize = (str) =>
     (str || '')
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
       .toLowerCase();
 
-  // Filtrar datos según los filtros individuales
+  // Filtra los datos según los filtros activos
   const filteredData = data.filter((row) => {
     const matchCodigoExterno = row.CodigoExterno?.toString().toLowerCase().includes(filterCodigoExterno.toLowerCase());
     // Normalizar ambos para comparar sin acentos ni mayúsculas
@@ -88,10 +101,10 @@ export default function Form() {
     );
   });
 
-  // Calcular los datos a mostrar en la página actual
+  // Calcula los datos a mostrar en la página actual
   const paginatedData = filteredData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
-  // Calcular cuántas filas vacías agregar para mantener el alto de la tabla
+  // Calcula cuántas filas vacías agregar para mantener el alto de la tabla
   const emptyRows = rowsPerPage - paginatedData.length;
 
   // Manejar cambio de página
@@ -116,7 +129,7 @@ export default function Form() {
         background: '#fafbfc',
       }}
     >
-      {/* Filtros */}
+      {/* Filtros de búsqueda */}
       <div
         style={{
           display: 'flex',
@@ -130,6 +143,7 @@ export default function Form() {
         }}
         className="filtros-responsive"
       >
+        {/* Filtro por Código Externo */}
         <input
           type="text"
           placeholder="Filtrar por Código Externo"
@@ -145,6 +159,7 @@ export default function Form() {
             transition: 'border 0.2s',
           }}
         />
+        {/* Filtro por Nombre */}
         <input
           type="text"
           placeholder="Filtrar por Nombre"
@@ -160,6 +175,7 @@ export default function Form() {
             transition: 'border 0.2s',
           }}
         />
+        {/* Filtro por Estado (select) */}
         <select
           value={filterCodigoEstado}
           onChange={e => { setFilterCodigoEstado(e.target.value); setPage(0); }}
@@ -178,6 +194,7 @@ export default function Form() {
             <option key={opt.value} value={opt.value}>{opt.label}</option>
           ))}
         </select>
+        {/* Filtro por Fecha Cierre */}
         <input
           type="text"
           placeholder="Filtrar por Fecha Cierre"
@@ -220,6 +237,7 @@ export default function Form() {
         >
           <TableHead>
             <TableRow>
+              {/* Encabezados de la tabla */}
               <StyledTableCell className='col-codigo'>Código Externo</StyledTableCell>
               <StyledTableCell className='col-nombre'>Nombre</StyledTableCell>
               <StyledTableCell className='col-estado'>Estado</StyledTableCell>
@@ -227,6 +245,7 @@ export default function Form() {
             </TableRow>
           </TableHead>
           <TableBody>
+            {/* Muestra error, sin datos o los datos paginados */}
             {error ? (
               <TableRow>
                 <TableCell colSpan={4} align="center">Error al cargar los datos.</TableCell>
@@ -251,7 +270,7 @@ export default function Form() {
                 </StyledTableRow>
               ))
             )}
-            {/* Agrega filas vacías para mantener el alto */}
+            {/* Agrega filas vacías para mantener el alto visual */}
             {emptyRows > 0 && !error && Array.from({ length: emptyRows }).map((_, idx) => (
               <StyledTableRow key={`empty-${idx}`}>
                 <StyledTableCell colSpan={4} style={{ height: 53 }} />
@@ -260,6 +279,7 @@ export default function Form() {
           </TableBody>
         </Table>
       </TableContainer>
+      {/* Paginación de la tabla */}
       <TablePagination
         component="div"
         count={filteredData.length}

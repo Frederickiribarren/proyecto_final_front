@@ -1,3 +1,13 @@
+/* 
+  App.css
+  - Estilos responsivos para filtros y tablas.
+  - Ajustes de ancho y fuente según el tamaño de pantalla.
+  - Mejora la experiencia en móvil (scroll, tamaños, paddings).
+  - Personalización de paginación y botones.
+  - Estiliza la tabla y los filtros para una mejor visualización.
+*/
+
+/* Filtros responsivos: se apilan en móvil */
 @media (max-width: 600px) {
   .filtros-responsive {
     flex-direction: column !important;
@@ -9,6 +19,7 @@
   }
 }
 
+/* Anchos de columnas de la tabla según el tamaño de pantalla */
 .col-codigo {
   width: 100px;
 }
@@ -52,50 +63,7 @@
   }
 }
 
-.filtros-responsive input,
-.filtros-responsive select {
-  padding: 10px 14px;
-  border-radius: 8px;
-  border: 1px solid #bdbdbd;
-  outline: none;
-  font-size: 15px;
-  min-width: 180px;
-  transition: border 0.2s, box-shadow 0.2s;
-  background: #fff;
-}
-.filtros-responsive input:focus,
-.filtros-responsive select:focus {
-  border: 1.5px solid #1976d2 !important;
-  box-shadow: 0 0 0 2px #1976d22a;
-}
-.filtros-responsive select {
-  cursor: pointer;
-}
-.tabla-responsive {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  overflow-x: auto;
-}
-.MuiTableRow-root:hover {
-  background: #e3f2fd !important;
-  transition: background 0.2s;
-}
-.filtros-responsive + .tabla-responsive {
-  margin-top: 16px;
-}
-.pagination-toolbar {
-  justify-content: center !important;
-  padding: 0 16px !important;
-}
-.pagination-select,
-.pagination-select-label,
-.pagination-displayed-rows {
-  font-size: 15px !important;
-}
-.pagination-actions {
-  margin-left: 8px !important;
-}
+/* Ajustes de tabla y filtros para pantallas medianas y pequeñas */
 @media (max-width: 900px) {
   .tabla-responsive {
     width: 100% !important;
@@ -146,6 +114,54 @@
   /* Mejorar scroll horizontal para tablas en móvil */
 }
 
+/* Estilos de inputs y selects en filtros */
+.filtros-responsive input,
+.filtros-responsive select {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #bdbdbd;
+  outline: none;
+  font-size: 15px;
+  min-width: 180px;
+  transition: border 0.2s, box-shadow 0.2s;
+  background: #fff;
+}
+.filtros-responsive input:focus,
+.filtros-responsive select:focus {
+  border: 1.5px solid #1976d2 !important;
+  box-shadow: 0 0 0 2px #1976d22a;
+}
+.filtros-responsive select {
+  cursor: pointer;
+}
+
+/* Tabla responsiva y hover en filas */
+.tabla-responsive {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  overflow-x: auto;
+}
+.MuiTableRow-root:hover {
+  background: #e3f2fd !important;
+  transition: background 0.2s;
+}
+
+/* Paginación personalizada */
+.pagination-toolbar {
+  justify-content: center !important;
+  padding: 0 16px !important;
+}
+.pagination-select,
+.pagination-select-label,
+.pagination-displayed-rows {
+  font-size: 15px !important;
+}
+.pagination-actions {
+  margin-left: 8px !important;
+}
+
+/* Accesibilidad: enfoque visible en botones */
 .MuiButton-root:focus-visible {
             outline: 2px solid #e53935 !important;
             outline-offset: 2px;
@@ -161,6 +177,7 @@
               margin-right: 12px !important;
             }
           }
+          /* Quitar viñetas de listas */
           li {
             list-style: none;
           }
