@@ -6,6 +6,7 @@ import Form  from './components/Form.jsx'
 import Aside from './components/Aside.jsx'
 import Adjuducacion from './components/Adjudicacion.jsx'
 import Footer from './components/Footer.jsx'
+import News from './components/News.jsx'
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
       <Aside />
       <Adjuducacion />
       <Form />
+      <News />
       <Footer />
     </>
   
