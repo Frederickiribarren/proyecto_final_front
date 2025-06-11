@@ -173,25 +173,6 @@ function Header(props) {
           <DrawerList onClick={handleDrawerToggle} />
         </Drawer>
       </nav>
-      <style>
-        {`
-          .MuiButton-root:focus-visible {
-            outline: 2px solid #e53935 !important;
-            outline-offset: 2px;
-          }
-          @media (max-width: 600px) {
-            .MuiToolbar-root {
-              min-height: 56px !important;
-              padding-left: 8px !important;
-              padding-right: 8px !important;
-            }
-            img[alt="Logo"] {
-              height: 40px !important;
-              margin-right: 12px !important;
-            }
-          }
-        `}
-      </style>
     </Box>
   );
 }

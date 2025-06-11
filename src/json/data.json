@@ -1,0 +1,112 @@
+[
+  {
+    "title": "Procesos de Contratos",
+    "image": "news1",
+    "items": [
+      {
+        "company": "Empresa Ficticia Alfa S.A.",
+        "desc": "Proceso de selección de proveedores para el proyecto X."
+      },
+      {
+        "company": "Soluciones Beta S.R.L.",
+        "desc": "Evaluación de ofertas para el suministro de materiales."
+      },
+      {
+        "company": "Consultora Gamma Ltda.",
+        "desc": "Adjudicación de contrato para servicios de consultoría."
+      },
+      {
+        "company": "Infraestructura Delta S.A.",
+        "desc": "Proceso de licitación para la construcción de infraestructura."
+      }
+    ]
+  },
+  {
+    "title": "Ofertas de licitación",
+    "image": "news2",
+    "items": [
+      {
+        "company": "Innovatech Global S.A.",
+        "desc": "Oferta para la implementación de sistemas inteligentes de gestión."
+      },
+      {
+        "company": "Construcciones Horizonte S.R.L.",
+        "desc": "Propuesta para la ampliación de infraestructura vial."
+      },
+      {
+        "company": "EcoSoluciones Integrales Ltda.",
+        "desc": "Licitación para servicios de eficiencia energética."
+      },
+      {
+        "company": "RedLogística Express S.A.C.",
+        "desc": "Presentación de oferta para la gestión de transporte y distribución."
+      }
+    ]
+  },
+  {
+    "title": "Resolución de Problemas",
+    "image": "news3",
+    "items": [
+      {
+        "company": "Ingeniería Andina Integrada S.P.A.",
+        "desc": "Evaluación técnica y financiera en licitación de sistemas eléctricos."
+      },
+      {
+        "company": "Proyectos Sustentables del Sur Ltda.",
+        "desc": "Selección de oferente para servicios medioambientales en zonas rurales."
+      },
+      {
+        "company": "Nexus Infraestructura y Obras Civiles S.A.",
+        "desc": "Adjudicación de contrato para ampliación de redes de agua potable."
+      },
+      {
+        "company": "Consultora Estratégica Vértice S.R.L.",
+        "desc": "Resolución de problemas administrativos para la licitación del Proyecto Y."
+      }
+    ]
+  },
+  {
+    "title": "Licitaciones Adjudicadas",
+    "image": "news4",
+    "items": [
+      {
+        "company": "Consorcio TerraNova Ingeniería Ltda.",
+        "desc": "Adjudicación del contrato para la implementación de soluciones geotécnicas."
+      },
+      {
+        "company": "Soluciones Integrales Altus S.P.A.",
+        "desc": "Evaluación técnica de propuestas para el mantenimiento de redes viales."
+      },
+      {
+        "company": "Energía Renovable Solaris Chile S.A.",
+        "desc": "Licitación adjudicada para la instalación de paneles solares en escuelas rurales."
+      },
+      {
+        "company": "Infraestructura y Desarrollo Urbano Andestech S.R.L.",
+        "desc": "Resolución favorable en proyecto de pavimentación comunal."
+      }
+    ]
+  },
+  {
+    "title": "Financiamiento de Licitaciones",
+    "image": "news5",
+    "items": [
+      {
+        "company": "Capital Estratégico AndesFin S.A.",
+        "desc": "Asesoría y financiamiento para oferentes en procesos de licitación pública."
+      },
+      {
+        "company": "Inversora Cordillera & Asociados Ltda.",
+        "desc": "Gestión de recursos financieros para proyectos de infraestructura y energía."
+      },
+      {
+        "company": "Desarrollo y Fondos Terranova S.P.A.",
+        "desc": "Soporte económico a constructoras y consultoras en etapa de licitación."
+      },
+      {
+        "company": "Grupo Capital Progreso S.R.L.",
+        "desc": "Capitalización estratégica y evaluación de riesgo financiero para proyectos públicos."
+      }
+    ]
+  }
+]
