@@ -36,7 +36,7 @@ const Footer = () => {
             <GavelIcon fontSize="large" />
             <Box>
               <Typography variant="h6" fontWeight="bold">
-                Seguros de Licitaciones
+                Seguros de Licitaciones.
               </Typography>
               <Typography variant="body2" sx={{ opacity: 0.85 }}>
                 Confianza y respaldo en cada proceso de licitación.
