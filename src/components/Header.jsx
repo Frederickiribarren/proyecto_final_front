@@ -100,7 +100,7 @@ function Header(props) {
             sx={{
               display: "flex",
               alignItems: "center",
-              justifyContent: { xs: "center", sm: "center" }, // Cambia a center en xs y sm
+              justifyContent: "center",
               flexGrow: 1,
               gap: { xs: 1, sm: 4 },
             }}
@@ -111,13 +111,11 @@ function Header(props) {
               alt="Logo"
               style={{
                 height: 100,
+                marginRight: 24,
                 borderRadius: 8,
                 boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
                 background: "#fff",
                 padding: 4,
-                display: "block",
-                marginLeft: "auto",
-                marginRight: "auto",
               }}
             />
             <Box
