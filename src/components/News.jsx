@@ -14,7 +14,7 @@ import news1 from "../assets/creacion.jpg";
 import news2 from "../assets/ofertas.jpg";
 import news3 from "../assets/resolu-problem.jpg";
 import news4 from "../assets/adjudicadas.jpg";
-import news5 from "../assets/finance.jpg";
+import financeImg from '../../assets/finance.jpg';
 import data from "../json/data.json";
 
 // Mapeo de nombres de imagen a importaciones reales
@@ -24,7 +24,7 @@ const imageMap = {
   news2,
   news3,
   news4,
-  news5,
+  financeImg,
 };
 
 /**
