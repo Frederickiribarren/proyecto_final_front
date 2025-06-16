@@ -22,7 +22,7 @@ const aside = () => {
             </Typography>
             {/* Misión */}
             <Typography sx={{textAlign: "justify", width: "70%", fontSize: "1.2rem"}}>
-                <strong>Misión:</strong> Brindar transparencia y eficiencia en los procesos de licitación de seguros, asegurando que las empresas y entidades encuentren las mejores opciones disponibles de manera rápida y confiable   
+                <strong>Misión:</strong> Brindar transparencia y eficiencia en los procesos de licitación de seguros, asegurando que las empresas y entidades encuentren las mejores opciones disponibles de manera rápida y confiable.   
             </Typography>
             {/* Visión */}
             <Typography sx={{textAlign: "justify", width: "70%", fontSize: "1.2rem"}}>
