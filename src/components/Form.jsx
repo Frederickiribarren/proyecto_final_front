@@ -9,6 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
+import localData from '../json/backupApi.json'; // Importar el JSON local
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -63,19 +64,30 @@ export default function Form() {
     { value: '19', label: '19 Suspendida' },
   ];
 
-  useEffect(() => {
-    // Carga los datos al montar el componente
-    fetch('/ipss/api/mercadoPublico/resultado.json')
-      .then((res) => res.json())
-      .then((json) => {
-        setData(json.Listado || []);
-        setError(false);
-      })
-      .catch(() => {
-        setData([]);
-        setError(true);
-      });
+
+
+ useEffect(() => {
+    if (import.meta.env.DEV) {
+      // Modo desarrollo: usar el proxy
+      fetch('/ipss/api/mercadoPublico/resultado.json')
+        .then((res) => res.json())
+        .then((json) => {
+          setData(json.Listado || []);
+          setError(false);
+        })
+        .catch(() => {
+          setData([]);
+          setError(true);
+        });
+    } else {
+      // Modo producción: usar el JSON local importado
+      setData(localData.Listado || []);
+      setError(false);
+    }
   }, []);
+ 
+
+ 
 
   // Función para normalizar texto (eliminar acentos y pasar a minúsculas)
   // Permite búsquedas más flexibles
