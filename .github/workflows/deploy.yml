@@ -36,7 +36,7 @@ jobs:
 
       - name: Configurar autenticación de GitHub
         run: |
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git remote set-url origin https://x-access-token:${{ secrets.EVA_FINAL }}@github.com/${{ github.repository }}.git
 
       - name: Ejecutar deploy
         run: npm run deploy
