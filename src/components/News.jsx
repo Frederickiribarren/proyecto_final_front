@@ -14,7 +14,7 @@ import news1 from "../assets/creacion.jpg";
 import news2 from "../assets/ofertas.jpg";
 import news3 from "../assets/resolu-problem.jpg";
 import news4 from "../assets/adjudicadas.jpg";
-import news5 from "../assets/finance.jpg"
+import news5 from "../assets/Finance.jpg"
 import data from "../json/data.json";
 
 // Mapeo de nombres de imagen a importaciones reales
