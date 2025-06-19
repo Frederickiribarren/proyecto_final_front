@@ -29,14 +29,9 @@ jobs:
       - name: Ejecutar build
         run: npm run build
 
-      - name: Configurar identidad de Git
-        run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-
-      - name: Configurar autenticación de GitHub
-        run: |
-          git remote set-url origin https://x-access-token:${{ secrets.EVA_FINAL }}@github.com/${{ github.repository }}.git
-
-      - name: Ejecutar deploy
-        run: npm run deploy
+      - name: Deploy a GitHub Pages
+        Uses: peaceiris/actions-gh-pages@v4
+        whith:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+         
