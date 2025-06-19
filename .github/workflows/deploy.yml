@@ -5,23 +5,34 @@ on:
     branches:
       - main
 
+# Controla que solo se ejecute el workflow más reciente para la rama main
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
 jobs:
   build-and-deploy:
+    # Define el entorno para el despliegue en GitHub Pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout código
         uses: actions/checkout@v4
 
-      - name: Instalar Node.js
+      - name: Instalar Node.js y caché de NPM
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
+          # Añade caché para las dependencias de npm
+          cache: 'npm'
 
       - name: Instalar dependencias
         run: npm install
@@ -30,8 +41,9 @@ jobs:
         run: npm run build
 
       - name: Deploy a GitHub Pages
+        # Añade un id al paso para poder referenciar su salida (la URL)
+        id: deployment
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-         
