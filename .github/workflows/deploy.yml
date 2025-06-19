@@ -30,8 +30,8 @@ jobs:
         run: npm run build
 
       - name: Deploy a GitHub Pages
-        Uses: peaceiris/actions-gh-pages@v4
-        whith:
+        uses: peaceiris/actions-gh-pages@v4
+        with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
          
