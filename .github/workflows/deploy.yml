@@ -6,7 +6,7 @@ on:
       - main
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -40,3 +40,4 @@ jobs:
 
       - name: Ejecutar deploy
         run: npm run deploy
+
