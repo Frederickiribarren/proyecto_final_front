@@ -70,7 +70,8 @@ function Header(props) {
         component="nav"
         elevation={2}
         sx={{
-          backgroundColor: "#fff",
+          
+          backgroundColor: "#ff8f",
           boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
           borderBottom: "1px solid #e0e0e0",
         }}
