@@ -1,57 +1,43 @@
 name: Build and Deploy
 
 on:
-  # Se ejecuta en pushes a la rama main
   push:
     branches:
       - main
 
-# Permite que solo un despliegue se ejecute a la vez, cancelando los anteriores
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
-
-# Permisos necesarios para el GITHUB_TOKEN
 permissions:
   contents: read
   pages: write
   id-token: write
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout código
         uses: actions/checkout@v4
 
-      - name: Instalar Node.js y caché de dependencias
+      - name: Instalar Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-          # Habilita el caché para 'npm' para acelerar futuras ejecuciones
-          cache: 'npm'
 
       - name: Instalar dependencias
-        run: npm ci
+        run: npm install
 
       - name: Ejecutar build
-        # Asume que la base en vite.config.js es correcta para GitHub Pages
         run: npm run build
 
-      - name: Subir artefacto de build para el despliegue
-        uses: actions/upload-pages-artifact@v3
-        with:
-          # Sube el contenido de la carpeta 'dist' (salida de build de Vite)
-          path: './dist'
+      - name: Configurar identidad de Git
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
 
-  deploy:
-    # El trabajo de despliegue necesita que el de build termine primero
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Desplegar a GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Configurar autenticación de GitHub
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.EVA_FINAL }}@github.com/${{ github.repository }}.git
+
+      - name: Ejecutar deploy
+        run: npm run deploy
+
